@@ -1,6 +1,6 @@
 Welcome to the GPS/LoRa Cat Tracker for the ChirpStack LoRaWAN project.
 
-Build your own GPS Cat Tracker as seen in Make Magazine!
+Build your own GPS Cat Tracker as seen in Make Magazine volume 89!
 
 This project uses the Heltec CubeCell GPS/LoRa module to send the GPS coordinates via LoRa to the ChirpStack LoRaWAN network server. 
 The LoRaWAN Gateways are built on a Raspberry Pi using a Seeed Studio Wio-WM1302 LoRaWAN Gateway Module. 
