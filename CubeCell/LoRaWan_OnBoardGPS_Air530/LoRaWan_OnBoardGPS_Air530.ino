@@ -186,7 +186,6 @@ void printGPSInof()
   Serial.println(GPS.speed.kmph());
   Serial.println();
 }
-
 static void prepareTxFrame( uint8_t port )
 {
   /*appData size is LORAWAN_APP_DATA_MAX_SIZE which is defined in "commissioning.h".
@@ -198,7 +197,9 @@ static void prepareTxFrame( uint8_t port )
   */
 
   float lat, lon, alt, course, speed, hdop, sats;
-  
+  char str[20];
+  int i,len; 
+
   Serial.println("Waiting for GPS FIX ...");
 
   VextON();// oled power on;
@@ -277,38 +278,59 @@ static void prepareTxFrame( uint8_t port )
   unsigned char *puc;
 
   appDataSize = 0;
-  puc = (unsigned char *)(&lat);
-  appData[appDataSize++] = puc[0];
-  appData[appDataSize++] = puc[1];
-  appData[appDataSize++] = puc[2];
-  appData[appDataSize++] = puc[3];
-  puc = (unsigned char *)(&lon);
-  appData[appDataSize++] = puc[0];
-  appData[appDataSize++] = puc[1];
-  appData[appDataSize++] = puc[2];
-  appData[appDataSize++] = puc[3];
-  puc = (unsigned char *)(&alt);
-  appData[appDataSize++] = puc[0];
-  appData[appDataSize++] = puc[1];
-  appData[appDataSize++] = puc[2];
-  appData[appDataSize++] = puc[3];
-  puc = (unsigned char *)(&course);
-  appData[appDataSize++] = puc[0];
-  appData[appDataSize++] = puc[1];
-  appData[appDataSize++] = puc[2];
-  appData[appDataSize++] = puc[3];
-  puc = (unsigned char *)(&speed);
-  appData[appDataSize++] = puc[0];
-  appData[appDataSize++] = puc[1];
-  appData[appDataSize++] = puc[2];
-  appData[appDataSize++] = puc[3];
-  puc = (unsigned char *)(&hdop);
-  appData[appDataSize++] = puc[0];
-  appData[appDataSize++] = puc[1];
-  appData[appDataSize++] = puc[2];
-  appData[appDataSize++] = puc[3];
-  appData[appDataSize++] = (uint8_t)(batteryVoltage >> 8);
-  appData[appDataSize++] = (uint8_t)batteryVoltage;
+
+ // *****************************************************
+                                  
+ // The origional way of sending the data, commented out below, is much more efficent, however I was looking to send the data in a more readable format 
+
+  sprintf(str, "%.5f", lat);            // Convert Latitude to a string with 5 decimal places 
+  len = strlen(str);                    // Get length of Latitude str 
+  for (i=0; i < len; i++) {             // Loop through str 
+    appData[appDataSize++] = str[i];    // Increment size of appData and add one character at a time to the end of appData
+  }
+  
+  appData[appDataSize++] = ',';         // Separate Latitude and Longitude with a comma for readability 
+ 
+  sprintf(str, "%.5f", lon);            // Convert Longitude to a string with 5 decimal places
+  len = strlen(str);                    // Get length of Longitude str 
+  for (i=0; i < len; i++) {             // Loop through str
+    appData[appDataSize++] = str[i];    // Increment size of appData and add one character at a time to the end of appData
+  }
+
+ // *****************************************************
+
+ // puc = (unsigned char *)(&lat);
+ // appData[appDataSize++] = puc[0];
+ // appData[appDataSize++] = puc[1];
+ // appData[appDataSize++] = puc[2];
+ // appData[appDataSize++] = puc[3];
+ // puc = (unsigned char *)(&lon);
+ // appData[appDataSize++] = puc[0];
+ // appData[appDataSize++] = puc[1];
+ // appData[appDataSize++] = puc[2];
+ // appData[appDataSize++] = puc[3];
+ // puc = (unsigned char *)(&alt);
+ // appData[appDataSize++] = puc[0];
+ // appData[appDataSize++] = puc[1];
+ // appData[appDataSize++] = puc[2];
+ // appData[appDataSize++] = puc[3];
+ // puc = (unsigned char *)(&course);
+ // appData[appDataSize++] = puc[0];
+ // appData[appDataSize++] = puc[1];
+ // appData[appDataSize++] = puc[2];
+ // appData[appDataSize++] = puc[3];
+ // puc = (unsigned char *)(&speed);
+ // appData[appDataSize++] = puc[0];
+ // appData[appDataSize++] = puc[1];
+ // appData[appDataSize++] = puc[2];
+ // appData[appDataSize++] = puc[3];
+ // puc = (unsigned char *)(&hdop);
+ // appData[appDataSize++] = puc[0];
+ // appData[appDataSize++] = puc[1];
+ // appData[appDataSize++] = puc[2];
+ // appData[appDataSize++] = puc[3];
+ // appData[appDataSize++] = (uint8_t)(batteryVoltage >> 8);
+ // appData[appDataSize++] = (uint8_t)batteryVoltage;
 
   Serial.print("SATS: ");
   Serial.print(GPS.satellites.value());
