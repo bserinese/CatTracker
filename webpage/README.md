@@ -9,6 +9,7 @@ My host has a graphical file manager that allows me to set the permissions so Ow
 The first time savedata.php receives data from the ChirpStack.io application, it will create a file called lunadata.txt. This is a log file that will continually store all of the GPS data that comes from ChirpStack. The savedata.php will pull the last 25 data points from this log file and append it to the locations.json file. The leafletscript.js uses the locations.json to display the marker pins on the OpenStreeMap map on the webpage.
 Before it will run properly, you will need to make a minor edit to the initial lunadata.txt file.
 Open the luandata.txt file and delete the comma found on the first line:
+
 	,  
 	{ "time": "17:13", "latitude": 44.44418, "longitude": -73.05936 }, 
 
