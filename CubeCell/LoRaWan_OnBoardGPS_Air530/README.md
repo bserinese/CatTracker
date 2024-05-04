@@ -1,0 +1,1 @@
+If you read the Make Magazine article, I mention that we used the standard CubeCell example code with only minor changes. Since then, we did make more changes to how the data is sent to ChirpStack so it is easier for our PHP script to format the data. The original code is still here, just commented it out so you can see what we did.
